@@ -1,0 +1,27 @@
+#include <Windows.h>
+#include <stdio.h>
+
+int main() {
+    // Aloca um bloco de memória de 1024 bytes no HEAP
+    LPVOID pMem = HeapAlloc(GetProcessHeap(), 0, 1024);
+
+    if (pMem == NULL) {
+        printf("Erro ao alocar memoria no HEAP.\n");
+        return 1;
+    }
+
+    // Escreve uma mensagem na memória alocada
+    char* pMsg = (char*)pMem;
+    sprintf(pMsg, "Ola, mundo!");
+
+    // Exibe a mensagem na tela
+    printf("%s\n", pMsg);
+
+    // Libera a memória alocada no HEAP
+    if (!HeapFree(GetProcessHeap(), 0, pMem)) {
+        printf("Erro ao liberar memoria no HEAP.\n");
+        return 1;
+    }
+
+    return 0;
+}
